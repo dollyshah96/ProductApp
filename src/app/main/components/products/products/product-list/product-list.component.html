@@ -1,0 +1,54 @@
+<app-loader></app-loader>
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>Search Product..</mat-label>
+        <input matInput name="search" [(ngModel)]="searchTxt" (ngModelChange)="onSearchTxtChange()">
+    </mat-form-field>
+    <ul>
+        <li *ngFor="let item of searchList">
+            {{item.category}}
+        </li>
+    </ul>
+</form>
+<div *ngIf="products.length>0">
+    <table mat-table [dataSource]="products" class="mat-elevation-z8 w-100">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Product Id </th>
+            <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> Category </th>
+            <td mat-cell *matCellDef="let element" style="width: 15%;"> {{element.category}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element" style="width: 40%;"> {{element.description}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef> Image </th>
+            <td mat-cell *matCellDef="let element" style="width: 10%;">
+                <img height="100px" width="100px" [src]="element.image" alt="" srcset="">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.price | currency:'INR'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cart">
+            <th mat-header-cell *matHeaderCellDef> Cart </th>
+            <td mat-cell *matCellDef="let element" style="width: 10%;">
+                <button (click)="onAddCart(element)">
+                    Add to Cart
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
